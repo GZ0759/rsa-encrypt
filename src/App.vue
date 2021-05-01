@@ -1,10 +1,10 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
+  <tabs msg="Hello Vue 3 + Vite" />
 </template>
 
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import Tabs from './components/Tabs/index.vue'
 
 // This starter template is using Vue 3 experimental <script setup> SFCs
 // Check out https://github.com/vuejs/rfcs/blob/script-setup-2/active-rfcs/0000-script-setup.md
