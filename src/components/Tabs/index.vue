@@ -4,20 +4,22 @@
       <encrypt-panel />
     </el-tab-pane>
     <el-tab-pane label="普通加签">
-      <encrypt-sign-panel />
+      <signature-panel />
     </el-tab-pane>
     <el-tab-pane label="指数/模数加密">
-      <encrypt-panel />
+      <pem-panel />
     </el-tab-pane>
     <el-tab-pane label="降级加密">
-      <encrypt-panel />
+      <security-panel />
     </el-tab-pane>
   </el-tabs>
 </template>
 
 <script setup>
 import EncryptPanel from './EncryptPanel.vue'
-import EncryptSignPanel from './SignaturePanel.vue'
+import SignaturePanel from './SignaturePanel.vue'
+import PemPanel from './PemPanel.vue'
+import SecurityPanel from './SecurityPanel.vue'
 
 </script>
 
