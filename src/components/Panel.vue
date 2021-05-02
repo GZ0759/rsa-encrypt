@@ -8,31 +8,31 @@
     <el-row :gutter="20">
       <el-col :span="22">
         <div class="box">
-          <el-input :modelValue="encrypt" @input="$emit('update-encrypt', $event)" placeholder="请输入加密内容" ></el-input>
+          <el-input :modelValue="encrypt" @input="$emit('update-encrypt', $event)" :placeholder="'请输入'+encryptText+'内容'" ></el-input>
         </div>
       </el-col>
       <el-col :span="2">
-        <el-button type="primary" @click="$emit('click-encrypt')" >加密</el-button >
+        <el-button type="primary" @click="$emit('click-encrypt')" >{{ encryptText }}</el-button >
       </el-col>
     </el-row>
     <el-row :gutter="20">
       <el-col :span="24">
-        <div class="res">{{ encryptRes || '加密结果' }}</div>
+        <div class="res">{{ encryptRes || '结果' }}</div>
       </el-col>
     </el-row>
     <el-row :gutter="20">
       <el-col :span="22">
         <div class="box">
-          <el-input :modelValue="decrypt" @input="$emit('update-decrypt', $event)" placeholder="请输入解密内容" ></el-input>
+          <el-input :modelValue="decrypt" @input="$emit('update-decrypt', $event)" :placeholder="'请输入'+decryptText+'内容'" ></el-input>
         </div>
       </el-col>
       <el-col :span="2">
-        <el-button type="danger" @click="$emit('click-decrypt')" >解密</el-button >
+        <el-button type="danger" @click="$emit('click-decrypt')" >{{ decryptText }}</el-button >
       </el-col>
     </el-row>
     <el-row :gutter="20">
       <el-col :span="24">
-        <div class="res">{{ decryptRes || '没有解密结果' }}</div>
+        <div class="res">{{ decryptRes || '结果' }}</div>
       </el-col>
     </el-row>
   </el-card>
@@ -43,10 +43,12 @@ import { reactive, defineProps } from 'vue'
 
 const prop = defineProps({
   title: String,
+  encryptText: String,
   encrypt: String,
   encryptRes: String,
+  decryptText: String,
   decrypt: String,
-  decryptRes: String,
+  decryptRes: [String, Boolean],
 })
 
 </script>

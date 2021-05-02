@@ -4,7 +4,7 @@
 <script setup>
 import Panel from '../Panel.vue'
 import { reactive, defineProps, computed } from 'vue'
-import { JSEncrypt } from 'jsencrypt'
+import Jsrsasign from 'jsrsasign'
 import { publickey, privateKey } from '../../constants'
 
 const state = reactive({ 
@@ -16,30 +16,39 @@ const state = reactive({
 
 // 传递子组件prop
 const post = computed(()=>({
-  title: '使用 jsencrypt.js 插件进行加密',
-  encryptText: '加密',
+  title: '使用 jsrsasign.js 插件进行加签',
+  encryptText: '加签',
   encrypt: state.encrypt,
   encryptRes: state.encryptRes,
-  decryptText: '解密',
+  decryptText: '解签',
   decrypt: state.decrypt,
   decryptRes: state.decryptRes,
 }))
 
-// 加密
+// 私钥加签
 const onEncrypt = () => {
   let msg = state.encrypt
-  const jsencrypt = new JSEncrypt()
-  jsencrypt.setPublicKey(publickey)
-  state.encryptRes = jsencrypt.encrypt(msg)
+  let { KJUR, hex2b64, KEYUTIL } = Jsrsasign
+  let sig = new KJUR.crypto.Signature({"alg": "SHA1withRSA"})
+  sig.init(privateKey)
+  sig.updateString('aaa')
+  state.encryptRes = hex2b64(sig.sign())
+  // 普通RSA加密
+  // let res = KJUR.crypto.Cipher.encrypt(msg, KEYUTIL.getKey(publickey))
+  // state.encryptRes = hex2b64(res)
 }
 
-// 解密
+// 公钥解签
 const onDecrypt = () => {
   let msg = state.decrypt
-  let decrypt = new JSEncrypt()
-  decrypt.setPrivateKey(privateKey)
-  var decryptMsg = decrypt.decrypt(msg)
-  state.decryptRes = decryptMsg
+  let { KJUR, b64tohex, KEYUTIL } = Jsrsasign
+  let sig = new KJUR.crypto.Signature({"alg": "SHA1withRSA"})
+  sig.init(publickey)
+  sig.updateString('aaa')
+  state.decryptRes = sig.verify(b64tohex(msg))
+  // 普通RSA解密
+  // let res = KJUR.crypto.Cipher.decrypt(b64tohex(msg), KEYUTIL.getKey(privateKey))
+  // state.decryptRes = res
 }
 
 // 监听子组件事件
