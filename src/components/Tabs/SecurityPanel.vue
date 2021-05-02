@@ -34,26 +34,19 @@ const post = computed(()=>({
 // 加密
 const onEncrypt = () => {
   let msg = state.encrypt
-  let exponent = '00b812820160ab71866d71f026b363c1c9a61f1e84e0134e143790db8aa37057d0b3fc95780e8a048ca187605312a8a62ee52c18bb846c4e6b4768a096d4145903f2ba1632f6adae25961167d67ac773993e59ef3437392be1da00bcf2da9b2d63bc4f8993fb61cbbd06a70d95ea99fd4749c92f4933807863890103649918b527'
-  let modulus = '010001'
-  let key = new RSAUtils.getKeyPair(exponent, "", modulus)
-  console.log('key', key);
-  let apwd = RSAUtils.encryptedString(key, msg);
+  let exponent = '9E80B2BD4C1C3610F04B809EA52CD4E92FC54A3D64DD64DA824195B8A0D726A87318A180C20CB56613B92A1488D1DA59B8CAEF64BDE1A958EBF8E8EF94181B5D'
+  let modulus = '0x10001'
+  let key = new window.RSAUtils.getKeyPair(exponent, "", modulus)
+  let apwd = window.RSAUtils.encryptedString(key, msg);
   state.encryptRes = apwd
-
-  // let msg = state.encrypt
-  // const jsencrypt = new JSEncrypt()
-  // jsencrypt.setPublicKey(publickey)
-  // state.encryptRes = jsencrypt.encrypt(msg)
 }
 
 // 解密
 const onDecrypt = () => {
   let msg = state.decrypt
-  let decrypt = new JSEncrypt()
-  decrypt.setPrivateKey(privateKey)
-  var decryptMsg = decrypt.decrypt(msg)
-  state.decryptRes = decryptMsg
+  let key = privateKey
+  let apwd = window.RSAUtils.decryptedString(key, msg);
+  state.decryptRes = apwd
 }
 
 // 监听子组件事件
